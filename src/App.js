@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 
+// https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
+
+function b64EncodeUnicode(str) {
+    // first we use encodeURIComponent to get percent-encoded UTF-8,
+    // then we convert the percent encodings into raw bytes which
+    // can be fed into btoa.
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+        function toSolidBytes(match, p1) {
+            return String.fromCharCode('0x' + p1);
+    }));
+}
+
+function b64DecodeUnicode(str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +28,7 @@ class App extends Component {
     const search = window.location.search;
     if(search) {
       const query = search.substr(3);
-      value = decodeURIComponent(query);
+      value = b64DecodeUnicode(query);
     } else {
       value = `500/d
 
@@ -48,7 +67,7 @@ add semicolons 4 hours`
 
   copyToClipboard() {
     let textArea = document.createElement('textarea');
-    textArea.innerText = window.location.protocol + '//' + window.location.host +  '?e=' + encodeURIComponent(this.state.value);
+    textArea.innerText = window.location.protocol + '//' + window.location.host +  '?e=' + b64EncodeUnicode(this.state.value);
     document.body.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
