@@ -155,9 +155,21 @@ add semicolons 4 hours`,
   render() {
     return (
       <div className="App">
+
+      <div className="App-instructions">
+      <p>
+      Define rates like this: <strong>15 / hour</strong>
+      </p>
+      <p>
+      Then use them like this: <strong className="mono">34 hours</strong>
+      </p>
+      </div>
+      <div className="center">
+      
         <form>
           <textarea className="App-entryArea" rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
       </form>
+      </div>
 
         <code className="App-codeArea">
           {this.state.output}

@@ -8,3 +8,7 @@ code {
   display: block;
   white-space: pre-wrap;
 }
+
+.center {
+  text-align: center;
+}

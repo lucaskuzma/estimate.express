@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
 }
 
 .App-entryArea {
@@ -7,6 +6,10 @@
 }
 
 .App-codeArea {
-  text-align: left;
   padding-left: 10%;
+}
+
+.App-instructions {
+  padding-left: 10%;
+  font-family: monospace;
 }
