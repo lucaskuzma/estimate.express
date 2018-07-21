@@ -4,8 +4,14 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: `500/d
+
+    let value = '';
+    const search = window.location.search;
+    if(search) {
+      const query = search.substr(3);
+      value = decodeURIComponent(query);
+    } else {
+      value = `500/d
 
 research 5h
 update computer 1 week
@@ -20,11 +26,16 @@ pick framework 4w
 write css 1w
 
 junior 10/h
-add semicolons 4 hours`,
+add semicolons 4 hours`
+    }
+
+    this.state = {
+      value: value,
       output: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.copyToClipboard = this.copyToClipboard.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +44,15 @@ add semicolons 4 hours`,
 
   handleChange(event) {
     this.updateResult(event.target.value);
+  }
+
+  copyToClipboard() {
+    let textArea = document.createElement('textarea');
+    textArea.innerText = window.location.protocol + '//' + window.location.host +  '?e=' + encodeURIComponent(this.state.value);
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    textArea.remove();
   }
 
   updateResult(text) {
@@ -168,6 +188,8 @@ add semicolons 4 hours`,
 
           <form>
             <textarea className="App-entryArea" rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
+            <br/>
+            <input type="submit" value="Copy share link" onClick={this.copyToClipboard} />
           </form>
         </div>
 
