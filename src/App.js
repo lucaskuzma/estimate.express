@@ -62,7 +62,7 @@ add semicolons 4 hours`,
       if(match) {
         // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
 
-        const v = parseInt(match[1]);
+        const v = parseInt(match[1], 10);
         const t = match[2];
         var rateSet = '';
 
@@ -70,22 +70,22 @@ add semicolons 4 hours`,
           weekly = v;
           rateSet = 'week';
 
-          if(hourly == 0) hourly = v / 40;
-          if(daily == 0) daily = v / 5;
+          if(hourly === 0) hourly = v / 40;
+          if(daily === 0) daily = v / 5;
         }            
         if(t === 'd') {
           daily = v;
           rateSet = 'day';
 
-          if(hourly == 0) hourly = v/8;
-          if(weekly == 0) weekly = v * 5;
+          if(hourly === 0) hourly = v/8;
+          if(weekly === 0) weekly = v * 5;
         }
         if(t === 'h') {
           hourly = v;
           rateSet = 'hour';
 
-          if(weekly == 0) weekly = v * 40;
-          if(daily == 0) daily = v * 8;
+          if(weekly === 0) weekly = v * 40;
+          if(daily === 0) daily = v * 8;
         }
 
         rateStr = rateSet ? `rate: $${v} per ${rateSet}` : '';
@@ -98,7 +98,7 @@ add semicolons 4 hours`,
       if(match) {
         // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
 
-        const v = parseInt(match[1]);
+        const v = parseInt(match[1], 10);
         const t = match[2];
         var amount = 0;
 
