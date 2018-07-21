@@ -143,23 +143,22 @@ add semicolons 4 hours`
       output += ` ${amountStr}${rateStr}\n`;
     }
 
-    const hr = '-'.repeat(78);
-    totals += `\n${hr}\n\n`;
+    totals += `\n\n`;
 
-    totals += `total time: ${weeks} weeks`;
+    totals += `Total time: ${weeks} weeks`;
     totals += ` + ${days} days`;
     totals += ` + ${hours} hours\n`;
 
-    totals += `\n${hr}\n\n`;
+    totals += `\n\n`;
 
     const totalHours = 40 * weeks + 8 * days + hours;
-    totals += `total weeks: ${totalHours/40}`;
+    totals += `Total weeks: ${totalHours/40}`;
     totals += ` = total days: ${totalHours/8}`;
     totals += ` = total hours: ${totalHours}\n`;
 
-    totals += `\n${hr}\n\n`;
+    totals += `\n\n`;
 
-    totals += `total cash money: $${sum}\n`;
+    totals += `Total cash money: $${sum}\n`;
 
     this.setState(
       {
