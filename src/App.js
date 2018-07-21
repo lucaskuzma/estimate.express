@@ -189,8 +189,9 @@ add semicolons 4 hours`
           <form>
             <textarea className="App-entryArea" rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
             <br/>
-            <input type="submit" value="Copy share link" onClick={this.copyToClipboard} />
           </form>
+
+          <button onClick={this.copyToClipboard}>Copy share link</button>
         </div>
 
         <code className="App-codeArea">
