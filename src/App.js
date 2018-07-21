@@ -120,9 +120,9 @@ add semicolons 4 hours`,
         sum += amount;
       }
 
-      const pad = ' '.repeat(30 - (line.length + i.toString().length));
+      const pad = ' '.repeat(30 - line.length);
 
-      output.push(`${i} ${line}${pad}${amountStr}${rateStr}\n`);
+      output.push(`${line}${pad}${amountStr}${rateStr}\n`);
 
     }
 
