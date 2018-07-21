@@ -7,10 +7,13 @@ class App extends Component {
     this.state = {
       value: `500/d
 2300/wk
+100/h
 
-install react 1d
-set up repo 1h
-hack css 1w`,
+install react 2d
+set up repo 1hr
+meetings 2h
+pick framework 4w
+write css 1w`,
       output: [],
     };
 
@@ -32,13 +35,20 @@ hack css 1w`,
     var daily = 0;
     var hourly = 0;
 
+    var weeks = 0;
+    var days = 0;
+    var hours = 0;
+
+    var sum = 0;
+
     var lines = text.split('\n');
     for(var i = 0; i < lines.length; i++) {
-      const line = lines[i];
+      const line = lines[i] + '.';
       
       var n = '';
       var v = 0;
       var slashMode = false;
+      var prevChar = '';
 
       for (var c = 0; c < line.length; c++) {
         var char = line.charAt(c);
@@ -72,15 +82,45 @@ hack css 1w`,
           }
         }
 
+        var amount = 0;
+        if(v > 0 && n === '' && !slashMode) {
+          if(prevChar === 'w') {
+              weeks += v;
+              amount = v * weekly;
+            }            
+            if(prevChar === 'd') {
+              days += v;
+              amount = v * daily;
+            }
+            if(prevChar === 'h') {
+              hours += v;
+              amount = v * hourly;
+            }
+        }
+
+        prevChar = char;
+
 
       }
+
+      sum += amount;
 
       const pad = ' '.repeat(30 - c);
       const rates = `[ ${weekly}, ${daily}, ${hourly} ]`;
 
-      output.push(`${line}${pad}r:${rates}\n`);
+      const amountStr = amount > 0 ? `$${amount}` : ''
+      output.push(`${i} ${line}${pad}${amountStr} r:${rates}\n`);
 
     }
+
+    const hr = '-'.repeat(80);
+    output.push(`\n${hr}\n\n`);
+
+    output.push(`${weeks} weeks\n`)
+    output.push(`${days} days\n`)
+    output.push(`${hours} hours\n`)
+
+    output.push(`\n$${sum}\n`)
 
     this.setState(
       {
