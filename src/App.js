@@ -50,6 +50,8 @@ write css 1w`,
       var slashMode = false;
       var prevChar = '';
 
+      var rateSet = '';
+
       for (var c = 0; c < line.length; c++) {
         var char = line.charAt(c);
 
@@ -71,12 +73,15 @@ write css 1w`,
 
             if(char === 'w') {
               weekly = v;
+              rateSet = 'week';
             }            
             if(char === 'd') {
               daily = v;
+              rateSet = 'day';
             }
             if(char === 'h') {
               hourly = v;
+              rateSet = 'hour';
             }
 
           }
@@ -108,8 +113,10 @@ write css 1w`,
       const pad = ' '.repeat(30 - c);
       const rates = `[ ${weekly}, ${daily}, ${hourly} ]`;
 
-      const amountStr = amount > 0 ? `$${amount}` : ''
-      output.push(`${i} ${line}${pad}${amountStr} r:${rates}\n`);
+      const amountStr = amount > 0 ? `$${amount}` : '';
+      const rateStr = rateSet ? `rate: $${v} per ${rateSet}` : '';
+
+      output.push(`${i} ${line}${pad}${amountStr}${rateStr}\n`);
 
     }
 
