@@ -19,3 +19,18 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.btn {
+  font-family: inherit;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: inherit;
+  border: none;
+  background-color: #f2f2f2;
+  box-shadow: 2px 2px #aaaaaa;
+  outline: none;
+}
+
+.btn:active{
+  box-shadow: 0px 0px #eeeeee;
+ }

@@ -140,7 +140,7 @@ add semicolons 4 hours`
         sum += amount;
       }
 
-      output += ` ${amountStr}${rateStr}\n`;
+      output += `${amountStr}${rateStr}\n`;
     }
 
     totals += `\n\n`;
@@ -149,14 +149,14 @@ add semicolons 4 hours`
     totals += ` + ${days} days`;
     totals += ` + ${hours} hours\n`;
 
-    totals += `\n\n`;
+    totals += `\n`;
 
     const totalHours = 40 * weeks + 8 * days + hours;
     totals += `Total weeks: ${totalHours/40}`;
     totals += ` = total days: ${totalHours/8}`;
     totals += ` = total hours: ${totalHours}\n`;
 
-    totals += `\n\n`;
+    totals += `\n`;
 
     totals += `Total cash money: $${sum}\n`;
 
@@ -186,12 +186,12 @@ add semicolons 4 hours`
           <form>
             <textarea className="App-entryArea App-textArea"  rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
             <textarea className="App-outputArea App-textArea" rows="20" type="text" value={this.state.output} readOnly />
-            <textarea className="App-totalsArea App-textArea" rows="15" type="text" value={this.state.totals} readOnly />
+            <textarea className="App-totalsArea App-textArea" rows="12" type="text" value={this.state.totals} readOnly />
           </form>
         </div>
 
         <div className="center">
-          <button onClick={this.copyToClipboard}>Copy share link</button>
+          <button class="btn" onClick={this.copyToClipboard}>Copy share link</button>
         </div>
 
         <div className="App-colophon center">
