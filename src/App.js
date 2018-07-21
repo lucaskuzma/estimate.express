@@ -33,7 +33,8 @@ add semicolons 4 hours`
 
     this.state = {
       value: value,
-      output: [],
+      output: '',
+      totals: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -58,7 +59,8 @@ add semicolons 4 hours`
   }
 
   updateResult(text) {
-    let output = [];
+    let output = '';
+    let totals = '';
 
     let weekly = 0;
     let daily = 0;
@@ -82,8 +84,6 @@ add semicolons 4 hours`
       let regex = /(\d+\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
       let match = regex.exec(line);
       if(match) {
-        // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
-
         const v = parseInt(match[1], 10);
         const t = match[2];
         let rateSet = '';
@@ -118,8 +118,6 @@ add semicolons 4 hours`
       regex = /(\d+\s*)\s*([wdh])/; // https://regexr.com/3spq5
       match = regex.exec(line);
       if(match) {
-        // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
-
         const v = parseInt(match[1], 10);
         const t = match[2];
         let amount = 0;
@@ -142,34 +140,32 @@ add semicolons 4 hours`
         sum += amount;
       }
 
-      const pad = ' '.repeat(30 - line.length);
-
-      output.push(`${line}${pad}${amountStr}${rateStr}\n`);
-
+      output += `${amountStr}${rateStr}\n`;
     }
 
     const hr = '-'.repeat(80);
-    output.push(`\n${hr}\n\n`);
+    totals += `\n${hr}\n\n`;
 
-    output.push(`total time: ${weeks} weeks`);
-    output.push(` + ${days} days`);
-    output.push(` + ${hours} hours\n`);
+    totals += `total time: ${weeks} weeks`;
+    totals += ` + ${days} days`;
+    totals += ` + ${hours} hours\n`;
 
-    output.push(`\n${hr}\n\n`);
+    totals += `\n${hr}\n\n`;
 
     const totalHours = 40 * weeks + 8 * days + hours;
-    output.push(`total weeks: ${totalHours/40}`);
-    output.push(` = total days: ${totalHours/8}`);
-    output.push(` = total hours: ${totalHours}\n`);
+    totals += `total weeks: ${totalHours/40}`;
+    totals += ` = total days: ${totalHours/8}`;
+    totals += ` = total hours: ${totalHours}\n`;
 
-    output.push(`\n${hr}\n\n`);
+    totals += `\n${hr}\n\n`;
 
-    output.push(`total cash money: $${sum}\n`);
+    totals += `total cash money: $${sum}\n`;
 
     this.setState(
       {
         value: text,
         output: output,
+        totals: totals,
       }
     );
   }
@@ -189,16 +185,15 @@ add semicolons 4 hours`
         <div className="center">
 
           <form>
-            <textarea className="App-entryArea" rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
-            <br/>
+            <textarea className="App-entryArea App-textArea" rows="20" cols="40" type="text" value={this.state.value} onChange={this.handleChange} />
+            <textarea className="App-outputArea App-textArea" rows="20" cols="40" type="text" value={this.state.output} onChange={this.handleChange} readOnly />
+            <textarea className="App-totalsArea App-textArea" rows="10" cols="83" type="text" value={this.state.totals} onChange={this.handleChange} readOnly />
           </form>
-
-          <button onClick={this.copyToClipboard}>Copy share link</button>
         </div>
 
-        <code className="App-codeArea">
-          {this.state.output}
-        </code>
+        <div className="center">
+          <button onClick={this.copyToClipboard}>Copy share link</button>
+        </div>
 
       </div>
     );

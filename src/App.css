@@ -1,16 +1,39 @@
 .App {
 }
 
-.App-entryArea {
-  width: 80%;
-}
-
-.App-codeArea {
-  padding-left: 10%;
-  padding-top: 24px;
-}
-
 .App-instructions {
   padding-left: 10%;
   font-family: monospace;
+  font-size: 12px;
+  padding-bottom: 14px;
+  color: #555555;
+}
+
+.App-textArea {
+  resize: none;
+
+  font-family: monospace;
+  font-size: 12px;
+
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.App-entryArea {
+  width: 40%;
+}
+
+.App-outputArea {
+  width: 40%;
+  color: #555555;
+}
+
+.App-totalsArea {
+  width: 80%;
+  color: #555555;
 }
