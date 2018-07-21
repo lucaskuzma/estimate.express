@@ -110,7 +110,7 @@ add semicolons 4 hours`
           if(daily === 0) daily = v * 8;
         }
 
-        rateStr = rateSet ? `rate: $${v} per ${rateSet}` : '';
+        rateStr = rateSet ? `$${v} / ${rateSet}` : '';
       }
 
       // set an amount for a task
@@ -140,10 +140,10 @@ add semicolons 4 hours`
         sum += amount;
       }
 
-      output += `${amountStr}${rateStr}\n`;
+      output += ` ${amountStr}${rateStr}\n`;
     }
 
-    const hr = '-'.repeat(80);
+    const hr = '-'.repeat(78);
     totals += `\n${hr}\n\n`;
 
     totals += `total time: ${weeks} weeks`;
@@ -185,14 +185,18 @@ add semicolons 4 hours`
         <div className="center">
 
           <form>
-            <textarea className="App-entryArea App-textArea" rows="20" cols="40" type="text" value={this.state.value} onChange={this.handleChange} />
-            <textarea className="App-outputArea App-textArea" rows="20" cols="40" type="text" value={this.state.output} onChange={this.handleChange} readOnly />
-            <textarea className="App-totalsArea App-textArea" rows="10" cols="83" type="text" value={this.state.totals} onChange={this.handleChange} readOnly />
+            <textarea className="App-entryArea App-textArea"  rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
+            <textarea className="App-outputArea App-textArea" rows="20" type="text" value={this.state.output} readOnly />
+            <textarea className="App-totalsArea App-textArea" rows="15" type="text" value={this.state.totals} readOnly />
           </form>
         </div>
 
         <div className="center">
           <button onClick={this.copyToClipboard}>Copy share link</button>
+        </div>
+
+        <div className="App-colophon center">
+          <p>Made with 👽 by <a href="http://strange.agency">The Strange Agency</a></p>
         </div>
 
       </div>
