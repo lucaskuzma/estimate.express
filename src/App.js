@@ -58,18 +58,18 @@ add semicolons 4 hours`,
         // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
 
         const v = parseInt(match[1]);
-        const char = match[2];
+        const t = match[2];
         var rateSet = '';
 
-        if(char === 'w') {
+        if(t === 'w') {
           weekly = v;
           rateSet = 'week';
         }            
-        if(char === 'd') {
+        if(t === 'd') {
           daily = v;
           rateSet = 'day';
         }
-        if(char === 'h') {
+        if(t === 'h') {
           hourly = v;
           rateSet = 'hour';
         }
@@ -83,18 +83,18 @@ add semicolons 4 hours`,
         // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
 
         const v = parseInt(match[1]);
-        const char = match[2];
+        const t = match[2];
         var amount = 0;
 
-        if(char === 'w') {
+        if(t === 'w') {
           weeks += v;
           amount = v * weekly;
         }            
-        if(char === 'd') {
+        if(t === 'd') {
           days += v;
           amount = v * daily;
         }
-        if(char === 'h') {
+        if(t === 'h') {
           hours += v;
           amount = v * hourly;
         }
@@ -104,7 +104,7 @@ add semicolons 4 hours`,
         sum += amount;
       }
 
-      const pad = ' '.repeat(30 - line.length);
+      const pad = ' '.repeat(30 - (line.length + i.toString().length));
 
       output.push(`${i} ${line}${pad}${amountStr}${rateStr}\n`);
 
@@ -117,7 +117,16 @@ add semicolons 4 hours`,
     output.push(`${days} days\n`)
     output.push(`${hours} hours\n`)
 
-    output.push(`\n$${sum}\n`)
+    output.push(`\n${hr}\n\n`);
+
+    const totalHours = 40 * weeks + 8 * days + hours;
+    output.push(`total hours: ${totalHours}`);
+    output.push(` = total days: ${totalHours/8}`);
+    output.push(` = total weeks: ${totalHours/40}\n`);
+
+    output.push(`\n${hr}\n\n`);
+
+    output.push(`total cash money: $${sum}\n`)
 
     this.setState(
       {
