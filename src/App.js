@@ -64,7 +64,7 @@ add semicolons 4 hours`,
 
         const v = parseInt(match[1], 10);
         const t = match[2];
-        var rateSet = '';
+        let rateSet = '';
 
         if(t === 'w') {
           weekly = v;
@@ -129,16 +129,16 @@ add semicolons 4 hours`,
     const hr = '-'.repeat(80);
     output.push(`\n${hr}\n\n`);
 
-    output.push(`${weeks} weeks\n`);
-    output.push(`${days} days\n`);
-    output.push(`${hours} hours\n`);
+    output.push(`total time: ${weeks} weeks`);
+    output.push(` + ${days} days`);
+    output.push(` + ${hours} hours\n`);
 
     output.push(`\n${hr}\n\n`);
 
     const totalHours = 40 * weeks + 8 * days + hours;
-    output.push(`total hours: ${totalHours}`);
+    output.push(`total weeks: ${totalHours/40}`);
     output.push(` = total days: ${totalHours/8}`);
-    output.push(` = total weeks: ${totalHours/40}\n`);
+    output.push(` = total hours: ${totalHours}\n`);
 
     output.push(`\n${hr}\n\n`);
 
@@ -158,10 +158,10 @@ add semicolons 4 hours`,
 
         <div className="App-instructions">
           <p>
-            Define rates like this: <strong>15 / hour</strong>
+            Define rates like this: <strong>15 / hour</strong> or <strong>15/h</strong> etc.
           </p>
           <p>
-            Then use them like this: <strong className="mono">34 hours</strong>
+            Then use them like this: <strong className="mono">34 hours</strong> or <strong>34h</strong> etc.
           </p>
         </div>
         <div className="center">
