@@ -6,6 +6,10 @@ class App extends Component {
     super(props);
     this.state = {
       value: `500/d
+
+research 5h
+update computer 1 week
+
 2300/wk
 100/h
 
@@ -15,7 +19,7 @@ meetings 2h
 pick framework 4w
 write css 1w
 
-junior 1/h
+junior 10/h
 add semicolons 4 hours`,
       output: [],
     };
@@ -51,6 +55,7 @@ add semicolons 4 hours`,
       var rateStr = '';
       var amountStr = '';
 
+      // set rate
 
       var regex = /(\d+\s*)\/\s*(w|d|h)/; // https://regexr.com/3spp4
       var match = regex.exec(line);
@@ -64,18 +69,29 @@ add semicolons 4 hours`,
         if(t === 'w') {
           weekly = v;
           rateSet = 'week';
+
+          if(hourly == 0) hourly = v / 40;
+          if(daily == 0) daily = v / 5;
         }            
         if(t === 'd') {
           daily = v;
           rateSet = 'day';
+
+          if(hourly == 0) hourly = v/8;
+          if(weekly == 0) weekly = v * 5;
         }
         if(t === 'h') {
           hourly = v;
           rateSet = 'hour';
+
+          if(weekly == 0) weekly = v * 40;
+          if(daily == 0) daily = v * 8;
         }
 
         rateStr = rateSet ? `rate: $${v} per ${rateSet}` : '';
       }
+
+      // set an amount for a task
 
       regex = /(\d+\s*)\s*(w|d|h)/; // https://regexr.com/3spq5
       match = regex.exec(line);
