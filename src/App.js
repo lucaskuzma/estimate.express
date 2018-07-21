@@ -13,7 +13,10 @@ install react 2d
 set up repo 1hr
 meetings 2h
 pick framework 4w
-write css 1w`,
+write css 1w
+
+junior 1/h
+add semicolons 4 hours`,
       output: [],
     };
 
@@ -43,78 +46,65 @@ write css 1w`,
 
     var lines = text.split('\n');
     for(var i = 0; i < lines.length; i++) {
-      const line = lines[i] + '.';
-      
-      var n = '';
-      var v = 0;
-      var slashMode = false;
-      var prevChar = '';
+      const line = lines[i];
 
-      var rateSet = '';
+      var rateStr = '';
+      var amountStr = '';
 
-      for (var c = 0; c < line.length; c++) {
-        var char = line.charAt(c);
 
-        n += char;
-        if(!isNaN(n)) {
-          v = parseInt(n, 10);
-        } else {
-          n = ''
+      var regex = /(\d+\s*)\/\s*(w|d|h)/; // https://regexr.com/3spp4
+      var match = regex.exec(line);
+      if(match) {
+        // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
+
+        const v = parseInt(match[1]);
+        const char = match[2];
+        var rateSet = '';
+
+        if(char === 'w') {
+          weekly = v;
+          rateSet = 'week';
+        }            
+        if(char === 'd') {
+          daily = v;
+          rateSet = 'day';
+        }
+        if(char === 'h') {
+          hourly = v;
+          rateSet = 'hour';
         }
 
-        if(char ==='/') {
-          slashMode = true;
-        }
-
-        if(slashMode) {
-          if(char === ' ') {
-            slashMode = false;
-          } else {
-
-            if(char === 'w') {
-              weekly = v;
-              rateSet = 'week';
-            }            
-            if(char === 'd') {
-              daily = v;
-              rateSet = 'day';
-            }
-            if(char === 'h') {
-              hourly = v;
-              rateSet = 'hour';
-            }
-
-          }
-        }
-
-        var amount = 0;
-        if(v > 0 && n === '' && !slashMode) {
-          if(prevChar === 'w') {
-              weeks += v;
-              amount = v * weekly;
-            }            
-            if(prevChar === 'd') {
-              days += v;
-              amount = v * daily;
-            }
-            if(prevChar === 'h') {
-              hours += v;
-              amount = v * hourly;
-            }
-        }
-
-        prevChar = char;
-
-
+        rateStr = rateSet ? `rate: $${v} per ${rateSet}` : '';
       }
 
-      sum += amount;
+      regex = /(\d+\s*)\s*(w|d|h)/; // https://regexr.com/3spq5
+      match = regex.exec(line);
+      if(match) {
+        // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
 
-      const pad = ' '.repeat(30 - c);
-      const rates = `[ ${weekly}, ${daily}, ${hourly} ]`;
+        const v = parseInt(match[1]);
+        const char = match[2];
+        var amount = 0;
 
-      const amountStr = amount > 0 ? `$${amount}` : '';
-      const rateStr = rateSet ? `rate: $${v} per ${rateSet}` : '';
+        if(char === 'w') {
+          weeks += v;
+          amount = v * weekly;
+        }            
+        if(char === 'd') {
+          days += v;
+          amount = v * daily;
+        }
+        if(char === 'h') {
+          hours += v;
+          amount = v * hourly;
+        }
+
+        amountStr = amount > 0 ? `$${amount}` : '';
+
+        sum += amount;
+      }
+
+      const pad = ' '.repeat(30 - line.length);
 
       output.push(`${i} ${line}${pad}${amountStr}${rateStr}\n`);
 
