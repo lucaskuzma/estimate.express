@@ -36,29 +36,29 @@ add semicolons 4 hours`,
   }
 
   updateResult(text) {
-    var output = [];
+    let output = [];
 
-    var weekly = 0;
-    var daily = 0;
-    var hourly = 0;
+    let weekly = 0;
+    let daily = 0;
+    let hourly = 0;
 
-    var weeks = 0;
-    var days = 0;
-    var hours = 0;
+    let weeks = 0;
+    let days = 0;
+    let hours = 0;
 
-    var sum = 0;
+    let sum = 0;
 
-    var lines = text.split('\n');
-    for(var i = 0; i < lines.length; i++) {
+    let lines = text.split('\n');
+    for(let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      var rateStr = '';
-      var amountStr = '';
+      let rateStr = '';
+      let amountStr = '';
 
       // set rate
 
-      var regex = /(\d+\s*)\/\s*(w|d|h)/; // https://regexr.com/3spp4
-      var match = regex.exec(line);
+      let regex = /(\d+\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
+      let match = regex.exec(line);
       if(match) {
         // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
 
@@ -93,14 +93,14 @@ add semicolons 4 hours`,
 
       // set an amount for a task
 
-      regex = /(\d+\s*)\s*(w|d|h)/; // https://regexr.com/3spq5
+      regex = /(\d+\s*)\s*([wdh])/; // https://regexr.com/3spq5
       match = regex.exec(line);
       if(match) {
         // output.push(`${match[0]} ${match[1]} ${match[2]}\n`)
 
         const v = parseInt(match[1], 10);
         const t = match[2];
-        var amount = 0;
+        let amount = 0;
 
         if(t === 'w') {
           weeks += v;
@@ -129,9 +129,9 @@ add semicolons 4 hours`,
     const hr = '-'.repeat(80);
     output.push(`\n${hr}\n\n`);
 
-    output.push(`${weeks} weeks\n`)
-    output.push(`${days} days\n`)
-    output.push(`${hours} hours\n`)
+    output.push(`${weeks} weeks\n`);
+    output.push(`${days} days\n`);
+    output.push(`${hours} hours\n`);
 
     output.push(`\n${hr}\n\n`);
 
@@ -142,7 +142,7 @@ add semicolons 4 hours`,
 
     output.push(`\n${hr}\n\n`);
 
-    output.push(`total cash money: $${sum}\n`)
+    output.push(`total cash money: $${sum}\n`);
 
     this.setState(
       {
