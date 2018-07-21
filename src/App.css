@@ -5,3 +5,8 @@
 .App-entryArea {
   width: 80%;
 }
+
+.App-codeArea {
+  text-align: left;
+  padding-left: 10%;
+}

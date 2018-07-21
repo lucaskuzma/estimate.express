@@ -28,9 +28,9 @@ hack css 1w`,
   updateResult(text) {
     var output = [];
 
-    var weekly = [0];
-    var daily = [0];
-    var hourly = [0];
+    var weekly = 0;
+    var daily = 0;
+    var hourly = 0;
 
     var lines = text.split('\n');
     for(var i = 0; i < lines.length; i++) {
@@ -60,13 +60,13 @@ hack css 1w`,
           } else {
 
             if(char === 'w') {
-              weekly.push(v);
+              weekly = v;
             }            
             if(char === 'd') {
-              daily.push(v);
+              daily = v;
             }
             if(char === 'h') {
-              hourly.push(v);
+              hourly = v;
             }
 
           }
@@ -75,9 +75,10 @@ hack css 1w`,
 
       }
 
-      const rates = `[ ${[...weekly].pop()}, ${[...daily].pop()}, ${[...hourly].pop()} ]`;
+      const pad = ' '.repeat(30 - c);
+      const rates = `[ ${weekly}, ${daily}, ${hourly} ]`;
 
-      output.push(line+' '+v+' rates:'+rates+'\n');
+      output.push(`${line}${pad}r:${rates}\n`);
 
     }
 
@@ -96,7 +97,7 @@ hack css 1w`,
           <textarea className="App-entryArea" rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
       </form>
 
-        <code>
+        <code className="App-codeArea">
           {this.state.output}
         </code>
 
