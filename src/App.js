@@ -24,6 +24,23 @@ code 1.2h
 meetings 2h
 server   01.5 hours
 
+filler
+filler
+filler
+filler
+
+filler
+filler
+filler
+filler
+filler
+filler
+filler
+filler
+filler
+filler
+filler
+filler
 `
     }
 
@@ -31,18 +48,31 @@ server   01.5 hours
       value: value,
       output: '',
       totals: '',
+      scrollTop: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
     this.updateResult(this.state.value)
   }
 
+  componentDidUpdate() {
+    this.refs.entry.scrollTop = this.state.scrollTop;
+    this.refs.output.scrollTop = this.state.scrollTop;
+  }
+
   handleChange(event) {
     this.updateResult(event.target.value);
+  }
+
+  handleScroll(event) {
+    this.setState({
+      scrollTop: event.target.scrollTop,
+    })
   }
 
   copyToClipboard() {
@@ -180,8 +210,24 @@ server   01.5 hours
         <div className="center">
 
           <form>
-            <textarea className="App-entryArea App-textArea"  rows="20" type="text" value={this.state.value} onChange={this.handleChange} />
-            <textarea className="App-outputArea App-textArea" rows="20" type="text" value={this.state.output} readOnly />
+            <textarea
+              className="App-entryArea App-textArea"
+              ref="entry"
+              rows="20"
+              type="text"
+              value={this.state.value}
+              onScroll={this.handleScroll}
+              onChange={this.handleChange}
+            />
+            <textarea
+              className="App-outputArea App-textArea"
+              ref="output"
+              rows="20"
+              type="text"
+              value={this.state.output}
+              onScroll={this.handleScroll}
+              readOnly
+            />
             <textarea className="App-totalsArea App-textArea" rows="12" type="text" value={this.state.totals} readOnly />
           </form>
         </div>
