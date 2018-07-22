@@ -57,6 +57,7 @@ he'll work with us for 2 weeks
   componentDidUpdate() {
     this.refs.entry.scrollTop = this.state.scrollTop;
     this.refs.output.scrollTop = this.state.scrollTop;
+    this.refs.total.rows = this.state.totals.split('\n').length;
   }
 
   handleChange(event) {
@@ -248,9 +249,9 @@ he'll work with us for 2 weeks
 
     totals += `\n`;
 
-    totals += `Total weeks: ${totalHours/40}`;
-    totals += ` = total days: ${totalHours/8}`;
-    totals += ` = total hours: ${totalHours}\n`;
+    totals += `Total hours of work: ${totalHours}`;
+    totals += `\n = days: ${totalHours/8}`;
+    totals += `\n = weeks: ${totalHours/40}\n`;
 
     totals += `\n`;
 
@@ -281,8 +282,8 @@ he'll work with us for 2 weeks
 
           <form>
             <textarea
-              className="App-entryArea App-textArea"
               ref="entry"
+              className="App-entryArea App-textArea"
               rows="20"
               type="text"
               value={this.state.value}
@@ -290,15 +291,21 @@ he'll work with us for 2 weeks
               onChange={this.handleChange}
             />
             <textarea
-              className="App-outputArea App-textArea"
               ref="output"
+              className="App-outputArea App-textArea"
               rows="20"
               type="text"
               value={this.state.output}
               onScroll={this.handleScroll}
               readOnly
             />
-            <textarea className="App-totalsArea App-textArea" rows="16" type="text" value={this.state.totals} readOnly />
+            <textarea
+              ref="total"
+              className="App-totalsArea App-textArea"
+              rows="16"
+              type="text"
+              value={this.state.totals}
+              readOnly />
           </form>
         </div>
 
