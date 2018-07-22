@@ -13,22 +13,18 @@ class App extends Component {
       const query = search.substr(3);
       value = b64DecodeUnicode(query);
     } else {
-      value = `500/d
+      value = `800/d
 
-research 5h
-update computer 1 week
+design 2h
+css 1 week
+code 1.2h
 
-2300/wk
-100/h
+125.50 / hour
 
-install react 2d
-set up repo 1hr
 meetings 2h
-pick framework 4w
-write css 1w
+server   01.5 hours
 
-junior 10/h
-add semicolons 4 hours`
+`
     }
 
     this.state = {
@@ -81,10 +77,10 @@ add semicolons 4 hours`
 
       // set rate
 
-      let regex = /(\d+\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
+      let regex = /(\d+\.*\d*\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
       let match = regex.exec(line);
       if(match) {
-        const v = parseInt(match[1], 10);
+        const v = parseFloat(match[1], 10);
         const t = match[2];
         let rateSet = '';
 
@@ -115,10 +111,10 @@ add semicolons 4 hours`
 
       // set an amount for a task
 
-      regex = /(\d+\s*)\s*([wdh])/; // https://regexr.com/3spq5
+      regex = /(\d+\.*\d*\s*)\s*([wdh])/; // https://regexr.com/3sqb7
       match = regex.exec(line);
       if(match) {
-        const v = parseInt(match[1], 10);
+        const v = parseFloat(match[1], 10);
         const t = match[2];
         let amount = 0;
 
@@ -191,7 +187,7 @@ add semicolons 4 hours`
         </div>
 
         <div className="center">
-          <button class="btn" onClick={this.copyToClipboard}>Copy share link</button>
+          <button className="btn" onClick={this.copyToClipboard}>Copy share link</button>
         </div>
 
         <div className="App-colophon center">
