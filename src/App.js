@@ -24,23 +24,12 @@ code 1.2h
 meetings 2h
 server   01.5 hours
 
-filler
-filler
-filler
-filler
 
-filler
-filler
-filler
-filler
-filler
-filler
-filler
-filler
-filler
-filler
-filler
-filler
+boss works 2h/day
+for 200/h
+
+he'll have 3 days of meetings
+
 `
     }
 
@@ -96,19 +85,60 @@ filler
     let days = 0;
     let hours = 0;
 
+    let daysPerWeek = 5;
+    let hoursPerDay = 8;
+    let hoursPerWeek = daysPerWeek * hoursPerDay;
+
     let sum = 0;
+
+    // -----------------------------------------------------------------------------------------------------------------
 
     let lines = text.split('\n');
     for(let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
+      let convStr = '';
       let rateStr = '';
       let amountStr = '';
 
+      // set conversion
+
+      let regex = /(\d+\.*\d*\s*)\s*([wdh])[a-z]*\s*\/\s*([wdh])/; // https://regexr.com/3sqbm
+      let match = regex.exec(line);
+      if (match) {
+        const v = parseFloat(match[1]);
+        const t = match[2];
+        const p = match[3];
+        let convSet = '';
+
+        if (t === 'w') {
+          // do nothing
+        }
+        if (t === 'd') {
+          daysPerWeek = v;
+          convSet = 'days / week';
+          weekly = 0;
+        }
+        if (t === 'h') {
+          if (p === 'd') {
+            hoursPerDay = v;
+            convSet = 'hours / day';
+            daily = 0;
+          }
+          if (p === 'w') {
+            hoursPerWeek = v;
+            convSet = 'hours / week';
+            weekly = 0;
+          }
+        }
+
+        convStr = convSet ? `${v} ${convSet}` : '';
+      }
+
       // set rate
 
-      let regex = /(\d+\.*\d*\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
-      let match = regex.exec(line);
+      regex = /(\d+\.*\d*\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
+      match = regex.exec(line);
       if(match) {
         const v = parseFloat(match[1]);
         const t = match[2];
@@ -118,22 +148,22 @@ filler
           weekly = v;
           rateSet = 'week';
 
-          if(hourly === 0) hourly = v / 40;
-          if(daily === 0) daily = v / 5;
+          if(hourly === 0) hourly = v / hoursPerWeek;
+          if(daily === 0) daily = v / daysPerWeek;
         }
         if(t === 'd') {
           daily = v;
           rateSet = 'day';
 
-          if(hourly === 0) hourly = v/8;
-          if(weekly === 0) weekly = v * 5;
+          if(hourly === 0) hourly = v / hoursPerDay;
+          if(weekly === 0) weekly = v * daysPerWeek;
         }
         if(t === 'h') {
           hourly = v;
           rateSet = 'hour';
 
-          if(weekly === 0) weekly = v * 40;
-          if(daily === 0) daily = v * 8;
+          if(weekly === 0) weekly = v * hoursPerWeek;
+          if(daily === 0) daily = v * hoursPerDay;
         }
 
         rateStr = rateSet ? `$${v} / ${rateSet}` : '';
@@ -143,7 +173,7 @@ filler
 
       regex = /(\d+\.*\d*\s*)\s*([wdh])/; // https://regexr.com/3sqb7
       match = regex.exec(line);
-      if(match) {
+      if(convStr === '' && match) {
         const v = parseFloat(match[1]);
         const t = match[2];
         let amount = 0;
@@ -166,8 +196,11 @@ filler
         sum += amount;
       }
 
-      output += `${amountStr}${rateStr}\n`;
+      // output results of parsing this line
+      output +=  [amountStr, rateStr, convStr].join('') + '\n';
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
 
     totals += `\n\n`;
 
