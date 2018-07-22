@@ -4,6 +4,7 @@ import {b64EncodeUnicode} from './utils';
 import {b64DecodeUnicode} from './utils';
 import {pluralize} from './utils';
 import {pad} from './utils';
+import {isTimeWord} from './utils';
 
 class App extends Component {
   constructor(props) {
@@ -22,13 +23,16 @@ research 1d
 css 1 week
 code 1.2h
 
-22/ cog
-1 cog
+22/ dog
+1 dog
 2 cats
-2 cog
+2 dog
+
+1 day
 
 3/🌮
 2🌮
+
 125.50 / hour
 
 meetings 2h
@@ -165,36 +169,40 @@ he'll work with us for 2 weeks
 
       // set rate
 
-      regex = /(\d+\.*\d*\s*)\/\s*([wdh])/; // https://regexr.com/3sqdr
+      regex = /(\d+\.*\d*\s*)\/\s*(\w+)/; // https://regexr.com/3sqep
       match = regex.exec(line);
       if(match) {
         const v = parseFloat(match[1]);
-        const t = match[2];
-        let rateSet = '';
+        let t = match[2];
+        if(isTimeWord(t)) {
+          t = t.charAt(0);
 
-        if(t === 'w') {
-          weekly = v;
-          rateSet = 'week';
+          let rateSet = '';
 
-          if(hourly === 0) hourly = v / hoursPerWeek;
-          if(daily === 0) daily = v / daysPerWeek;
+          if(t === 'w') {
+            weekly = v;
+            rateSet = 'week';
+
+            if(hourly === 0) hourly = v / hoursPerWeek;
+            if(daily === 0) daily = v / daysPerWeek;
+          }
+          if(t === 'd') {
+            daily = v;
+            rateSet = 'day';
+
+            if(hourly === 0) hourly = v / hoursPerDay;
+            if(weekly === 0) weekly = v * daysPerWeek;
+          }
+          if(t === 'h') {
+            hourly = v;
+            rateSet = 'hour';
+
+            if(weekly === 0) weekly = v * hoursPerWeek;
+            if(daily === 0) daily = v * hoursPerDay;
+          }
+
+          rateStr = rateSet ? `$${v} / ${rateSet}` : '';
         }
-        if(t === 'd') {
-          daily = v;
-          rateSet = 'day';
-
-          if(hourly === 0) hourly = v / hoursPerDay;
-          if(weekly === 0) weekly = v * daysPerWeek;
-        }
-        if(t === 'h') {
-          hourly = v;
-          rateSet = 'hour';
-
-          if(weekly === 0) weekly = v * hoursPerWeek;
-          if(daily === 0) daily = v * hoursPerDay;
-        }
-
-        rateStr = rateSet ? `$${v} / ${rateSet}` : '';
       }
 
       // set rate for an arbitrary thing
@@ -206,13 +214,12 @@ he'll work with us for 2 weeks
         const t = match[2];
         let rateSet = '';
 
-        if(!['h', 'hr', 'hour', 'd', 'day', 'w', 'week', 'wk'].includes(t.toLowerCase()))
+        if(!isTimeWord(t))
         {
           rndRates.set(t, v);
           rateSet = t;
+          rateStr = rateSet ? `$${v} / ${rateSet}` : '';
         }
-
-        rateStr = rateSet ? `$${v} / ${rateSet}` : '';
       }
 
       // set an amount for an arbitrary thing
@@ -224,7 +231,7 @@ he'll work with us for 2 weeks
         const t = match[2];
         let amount = 0;
 
-        if(!['h', 'hr', 'hour', 'd', 'day', 'w', 'week', 'wk'].includes(t.toLowerCase()))
+        if(!isTimeWord(t))
         {
           if(rndRates.has(t)) {
             const rate = rndRates.get(t);
@@ -239,35 +246,38 @@ he'll work with us for 2 weeks
 
       // set an amount for a task
 
-      regex = /(\d+\.*\d*\s*)\s*([wdh])/; // https://regexr.com/3sqb7
+      regex = /(\d+\.*\d*\s*)\s*(\w+)/; // https://regexr.com/3sqb7 ish
       match = regex.exec(line);
       if(convStr === '' && match) {
         const v = parseFloat(match[1]);
-        const t = match[2];
-        let amount = 0;
+        let t = match[2];
+        if(isTimeWord(t)) {
+          t = t.charAt(0);
+          let amount = 0;
 
-        if(t === 'w') {
-          weeks += v;
-          amount = v * weekly;
+          if (t === 'w') {
+            weeks += v;
+            amount = v * weekly;
 
-          const previous = weekTotals.has(hoursPerWeek) ? weekTotals.get(hoursPerWeek) : 0;
-          weekTotals.set(hoursPerWeek, v + previous);
+            const previous = weekTotals.has(hoursPerWeek) ? weekTotals.get(hoursPerWeek) : 0;
+            weekTotals.set(hoursPerWeek, v + previous);
+          }
+          if (t === 'd') {
+            days += v;
+            amount = v * daily;
+
+            const previous = dayTotals.has(hoursPerDay) ? dayTotals.get(hoursPerDay) : 0;
+            dayTotals.set(hoursPerDay, v + previous);
+          }
+          if (t === 'h') {
+            hours += v;
+            amount = v * hourly;
+          }
+
+          amountStr = amount > 0 ? `$${amount}` : '';
+
+          sum += amount;
         }
-        if(t === 'd') {
-          days += v;
-          amount = v * daily;
-
-          const previous = dayTotals.has(hoursPerDay) ? dayTotals.get(hoursPerDay) : 0;
-          dayTotals.set(hoursPerDay, v + previous);
-        }
-        if(t === 'h') {
-          hours += v;
-          amount = v * hourly;
-        }
-
-        amountStr = amount > 0 ? `$${amount}` : '';
-
-        sum += amount;
       }
 
       // output results of parsing this line
