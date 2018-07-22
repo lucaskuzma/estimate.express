@@ -80,7 +80,7 @@ server   01.5 hours
       let regex = /(\d+\.*\d*\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
       let match = regex.exec(line);
       if(match) {
-        const v = parseFloat(match[1], 10);
+        const v = parseFloat(match[1]);
         const t = match[2];
         let rateSet = '';
 
@@ -114,7 +114,7 @@ server   01.5 hours
       regex = /(\d+\.*\d*\s*)\s*([wdh])/; // https://regexr.com/3sqb7
       match = regex.exec(line);
       if(match) {
-        const v = parseFloat(match[1], 10);
+        const v = parseFloat(match[1]);
         const t = match[2];
         let amount = 0;
 
@@ -191,7 +191,7 @@ server   01.5 hours
         </div>
 
         <div className="App-colophon center">
-          <p>Made with 👽 by <a href="http://strange.agency">The Strange Agency</a></p>
+          <p>Made with <span role="img" aria-label="love">👽</span> by <a href="http://strange.agency">The Strange Agency</a></p>
         </div>
 
       </div>
