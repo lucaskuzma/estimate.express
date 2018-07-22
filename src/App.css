@@ -25,14 +25,14 @@
 }
 
 .App-entryArea {
-  width: 50%;
+  width: 40%;
   color: #000000;
   background-color: #f2f2f2;
   border-radius: 5px;
 }
 
 .App-outputArea {
-  width: 30%;
+  width: 40%;
 }
 
 .App-totalsArea {
