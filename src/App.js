@@ -22,6 +22,13 @@ research 1d
 css 1 week
 code 1.2h
 
+22/ cog
+1 cog
+2 cats
+2 cog
+
+3/🌮
+2🌮
 125.50 / hour
 
 meetings 2h
@@ -97,6 +104,9 @@ he'll work with us for 2 weeks
 
     let weekTotals = new Map();
     let dayTotals = new Map();
+
+    let rndRates = new Map();  // arbitrary per item rates
+    let rndTotals = new Map(); // arbitrary totals
 
     let sum = 0;
 
@@ -187,6 +197,46 @@ he'll work with us for 2 weeks
         rateStr = rateSet ? `$${v} / ${rateSet}` : '';
       }
 
+      // set rate for an arbitrary thing
+
+      regex = /(\d+\.*\d*\s*)\/\s*([^0-9\/\s.]+)/; // https://regexr.com/3sqem
+      match = regex.exec(line);
+      if(match) {
+        const v = parseFloat(match[1]);
+        const t = match[2];
+        let rateSet = '';
+
+        if(!['h', 'hr', 'hour', 'd', 'day', 'w', 'week', 'wk'].includes(t.toLowerCase()))
+        {
+          rndRates.set(t, v);
+          rateSet = t;
+        }
+
+        rateStr = rateSet ? `$${v} / ${rateSet}` : '';
+      }
+
+      // set an amount for an arbitrary thing
+
+      regex = /(\d+\.*\d*\s*)([^0-9\/\s.]+)/; // https://regexr.com/3sqe7
+      match = regex.exec(line);
+      if(convStr === '' && match) {
+        const v = parseFloat(match[1]);
+        const t = match[2];
+        let amount = 0;
+
+        if(!['h', 'hr', 'hour', 'd', 'day', 'w', 'week', 'wk'].includes(t.toLowerCase()))
+        {
+          if(rndRates.has(t)) {
+            const rate = rndRates.get(t);
+            const previous = rndTotals.has(t) ? rndTotals.get(t) : 0;
+            rndTotals.set(t, v + previous);
+            amount = v * rate;
+          }
+        }
+
+        amountStr = amount > 0 ? `$${amount}` : '';
+      }
+
       // set an amount for a task
 
       regex = /(\d+\.*\d*\s*)\s*([wdh])/; // https://regexr.com/3sqb7
@@ -259,6 +309,15 @@ he'll work with us for 2 weeks
     totals += `Total hours of work: ${totalHours}`;
     totals += `\n = days: ${totalHours/8}`;
     totals += `\n = weeks: ${totalHours/40}\n`;
+
+    totals += `\n`;
+
+    for (const [type, value] of rndTotals) {
+      const rate = rndRates.get(type);
+      const activity = `${value} x $${rate} ${pluralize(type, value)}`;
+      totals += `${pad(activity, 30)} = $${rate * value}\n`;
+      sum += rate * value;
+    }
 
     totals += `\n`;
 
