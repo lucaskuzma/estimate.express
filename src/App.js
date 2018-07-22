@@ -72,6 +72,7 @@ he'll have 2 weeks of meetings
 
   copyToClipboard() {
     let textArea = document.createElement('textarea');
+    textArea.contenteditable = true; // for iOS
     textArea.innerText = window.location.protocol + '//' + window.location.host +  '?e=' + b64EncodeUnicode(this.state.value);
     document.body.appendChild(textArea);
     textArea.select();
