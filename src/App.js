@@ -33,7 +33,8 @@ we will buy 2🌮
 
 boss works for 200/h
 2h/day
-he'll have 3 days of meetings
+3 day / week
+he'll have 2 weeks of meetings
 `
     }
 
