@@ -155,7 +155,7 @@ he'll work with us for 2 weeks
 
       // set rate
 
-      regex = /(\d+\.*\d*\s*)\/\s*([wdh])/; // https://regexr.com/3spp4
+      regex = /(\d+\.*\d*\s*)\/\s*([wdh])/; // https://regexr.com/3sqdr
       match = regex.exec(line);
       if(match) {
         const v = parseFloat(match[1]);
