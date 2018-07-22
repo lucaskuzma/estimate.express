@@ -14,7 +14,6 @@
   color: inherit;
 
   border: none;
-  overflow: auto;
   outline: none;
 
   -webkit-box-shadow: none;
@@ -37,6 +36,7 @@
 
 .App-totalsArea {
   width: 80%;
+  overflow: hidden;
 }
 
 .App-colophon {
