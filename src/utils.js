@@ -9,11 +9,15 @@ export const b64EncodeUnicode = (str) => {
         function toSolidBytes(match, p1) {
             return String.fromCharCode('0x' + p1);
     }));
-}
+};
 
 export const b64DecodeUnicode = (str) => {
     // Going backwards: from bytestream, to percent-encoding, to original string.
     return decodeURIComponent(atob(str).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-}
+};
+
+export const pluralize = (str, value) => {
+    return str + (value !== 1 ? 's' : '');
+};

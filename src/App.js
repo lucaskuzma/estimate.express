@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {b64EncodeUnicode} from './utils';
 import {b64DecodeUnicode} from './utils';
+import {pluralize} from './utils';
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class App extends Component {
       value = `800/d
 
 design 2h
+research 1d
 css 1 week
 code 1.2h
 
@@ -24,12 +26,14 @@ code 1.2h
 meetings 2h
 server   01.5 hours
 
-
 boss works 2h/day
 for 200/h
 
 he'll have 3 days of meetings
 
+consultant does 2 days / week
+1h/day
+he'll work with us for 2 weeks
 `
     }
 
@@ -89,6 +93,9 @@ he'll have 3 days of meetings
     let hoursPerDay = 8;
     let hoursPerWeek = daysPerWeek * hoursPerDay;
 
+    let weekTotals = new Map();
+    let dayTotals = new Map();
+
     let sum = 0;
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -116,12 +123,14 @@ he'll have 3 days of meetings
         }
         if (t === 'd') {
           daysPerWeek = v;
+          hoursPerWeek = daysPerWeek * hoursPerDay;
           convSet = 'days / week';
           weekly = 0;
         }
         if (t === 'h') {
           if (p === 'd') {
             hoursPerDay = v;
+            hoursPerWeek = daysPerWeek * hoursPerDay;
             convSet = 'hours / day';
             daily = 0;
           }
@@ -181,10 +190,16 @@ he'll have 3 days of meetings
         if(t === 'w') {
           weeks += v;
           amount = v * weekly;
+
+          const previous = weekTotals.has(hoursPerWeek) ? weekTotals.get(hoursPerWeek) : 0;
+          weekTotals.set(hoursPerWeek, v + previous);
         }
         if(t === 'd') {
           days += v;
           amount = v * daily;
+
+          const previous = dayTotals.has(hoursPerDay) ? dayTotals.get(hoursPerDay) : 0;
+          dayTotals.set(hoursPerDay, v + previous);
         }
         if(t === 'h') {
           hours += v;
@@ -210,7 +225,22 @@ he'll have 3 days of meetings
 
     totals += `\n`;
 
-    const totalHours = 40 * weeks + 8 * days + hours;
+    // const totalHours = 40 * weeks + 8 * days + hours;
+
+    let totalHours = hours;
+
+    for (const [rate, value] of dayTotals) {
+      totalHours += rate * value;
+      totals += `${value} ${rate} hour ${pluralize('day', value)}\n`;
+    }
+
+    for (const [rate, value] of weekTotals) {
+      totalHours += rate * value;
+      totals += `${value} ${rate} hour ${pluralize('week', value)}\n`;
+    }
+
+    totals += `\n`;
+
     totals += `Total weeks: ${totalHours/40}`;
     totals += ` = total days: ${totalHours/8}`;
     totals += ` = total hours: ${totalHours}\n`;
@@ -261,7 +291,7 @@ he'll have 3 days of meetings
               onScroll={this.handleScroll}
               readOnly
             />
-            <textarea className="App-totalsArea App-textArea" rows="12" type="text" value={this.state.totals} readOnly />
+            <textarea className="App-totalsArea App-textArea" rows="16" type="text" value={this.state.totals} readOnly />
           </form>
         </div>
 
