@@ -16,36 +16,24 @@ class App extends Component {
       const query = search.substr(3);
       value = b64DecodeUnicode(query);
     } else {
-      value = `800/d
+      value = `need to start with some rate 800/d
 
+research 1.5d
 design 2h
-research 1d
 css 1 week
-code 1.2h
 
-22/ dog
-1 dog
-2 cats
-2 dog
+maybe hourly rate is 125.50 / hour
+write amazing html for 2 hours
 
-1 day
+note that weekly rate doesn't change
+more css 1 week
 
-3/🌮
-2🌮
+food cost is 3/🌮
+we will buy 2🌮
 
-125.50 / hour
-
-meetings 2h
-server   01.5 hours
-
-boss works 2h/day
-for 200/h
-
+boss works for 200/h
+2h/day
 he'll have 3 days of meetings
-
-consultant does 2 days / week
-1h/day
-he'll work with us for 2 weeks
 `
     }
 
