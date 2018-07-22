@@ -143,7 +143,7 @@ he'll work with us for 2 weeks
           // update other conversions
           hoursPerWeek = daysPerWeek * hoursPerDay;
           weekly = hourly * hoursPerWeek;
-          convSet += ` ($${weekly}/w)`
+          convSet += ` ($${weekly}/w)`;
         }
         if (t === 'h') {
           if (p === 'd') {
@@ -153,14 +153,14 @@ he'll work with us for 2 weeks
             hoursPerWeek = daysPerWeek * hoursPerDay;
             daily = hoursPerDay * hourly;
             weekly = hoursPerWeek * hourly;
-            convSet += ` ($${daily}/d, $${weekly}/w)`
+            convSet += ` ($${daily}/d, $${weekly}/w)`;
           }
           if (p === 'w') {
             hoursPerWeek = v;
             convSet = 'hours / week';
             // update other conversions
             weekly = hourly * hoursPerWeek;
-            convSet += ` ($${weekly}/w)`
+            convSet += ` ($${weekly}/w)`;
           }
         }
 
@@ -178,30 +178,54 @@ he'll work with us for 2 weeks
           t = t.charAt(0);
 
           let rateSet = '';
+          let convSet = [];
 
           if(t === 'w') {
             weekly = v;
             rateSet = 'week';
 
-            if(hourly === 0) hourly = v / hoursPerWeek;
-            if(daily === 0) daily = v / daysPerWeek;
+            if(hourly === 0) {
+              hourly = v / hoursPerWeek;
+              convSet.push(`$${hourly}/h`);
+            }
+            if(daily === 0) {
+              daily = v / daysPerWeek;
+              convSet.push(`$${daily}/d`);
+            }
           }
           if(t === 'd') {
             daily = v;
             rateSet = 'day';
 
-            if(hourly === 0) hourly = v / hoursPerDay;
-            if(weekly === 0) weekly = v * daysPerWeek;
+            if(hourly === 0) {
+              hourly = v / hoursPerDay;
+              convSet.push(`$${hourly}/h`);
+            }
+            if(weekly === 0) {
+              weekly = v * daysPerWeek;
+              convSet.push(`$${weekly}/w`);
+            }
           }
           if(t === 'h') {
             hourly = v;
             rateSet = 'hour';
 
-            if(weekly === 0) weekly = v * hoursPerWeek;
-            if(daily === 0) daily = v * hoursPerDay;
+            if(weekly === 0) {
+              weekly = v * hoursPerWeek;
+              convSet.push(`$${weekly}/w`);
+            }
+            if(daily === 0) {
+              daily = v * hoursPerDay;
+              convSet.push(`$${daily}/d`);
+            }
           }
 
-          rateStr = rateSet ? `$${v} / ${rateSet}` : '';
+          let convStr = '';
+          if(convSet.length > 0) {
+            convStr = `(${convSet.join(', ')})`;
+          }
+
+          rateStr = rateSet ? `$${v} / ${rateSet} ${convStr}` : '';
         }
       }
 
