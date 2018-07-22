@@ -51,7 +51,8 @@ he'll have 2 weeks of meetings
   }
 
   componentDidMount() {
-    this.updateResult(this.state.value)
+    this.updateResult(this.state.value);
+    this.refs.total.rows = this.state.totals.split('\n').length;
   }
 
   componentDidUpdate() {
