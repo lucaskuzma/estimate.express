@@ -231,7 +231,7 @@ he'll work with us for 2 weeks
 
       // set rate for an arbitrary thing
 
-      regex = /(\d+\.*\d*\s*)\/\s*([^0-9\/\s.]+)/; // https://regexr.com/3sqem
+      regex = /(\d+\.*\d*\s*)\/\s*([^0-9/\s.]+)/; // https://regexr.com/3sqem
       match = regex.exec(line);
       if(match) {
         const v = parseFloat(match[1]);
@@ -248,7 +248,7 @@ he'll work with us for 2 weeks
 
       // set an amount for an arbitrary thing
 
-      regex = /(\d+\.*\d*\s*)([^0-9\/\s.]+)/; // https://regexr.com/3sqe7
+      regex = /(\d+\.*\d*\s*)([^0-9/\s.]+)/; // https://regexr.com/3sqe7
       match = regex.exec(line);
       if(convStr === '' && match) {
         const v = parseFloat(match[1]);
