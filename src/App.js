@@ -3,6 +3,7 @@ import './App.css';
 import {b64EncodeUnicode} from './utils';
 import {b64DecodeUnicode} from './utils';
 import {pluralize} from './utils';
+import {pad} from './utils';
 
 class App extends Component {
   constructor(props) {
@@ -219,24 +220,30 @@ he'll work with us for 2 weeks
 
     totals += `\n\n`;
 
-    totals += `Total time: ${weeks} weeks`;
+    totals += `Total time span: ${weeks} weeks`;
     totals += ` + ${days} days`;
     totals += ` + ${hours} hours\n`;
 
     totals += `\n`;
+    totals += `Total work:\n`;
+    totals += `\n`;
 
     // const totalHours = 40 * weeks + 8 * days + hours;
+
+    totals += `${pad(hours.toString() + ' hours', 30)} = ${hours} hours\n`;
 
     let totalHours = hours;
 
     for (const [rate, value] of dayTotals) {
       totalHours += rate * value;
-      totals += `${value} ${rate} hour ${pluralize('day', value)}\n`;
+      const activity = `${value} x ${rate} hour ${pluralize('day', value)}`;
+      totals += `${pad(activity, 30)} = ${rate * value} hours\n`;
     }
 
     for (const [rate, value] of weekTotals) {
       totalHours += rate * value;
-      totals += `${value} ${rate} hour ${pluralize('week', value)}\n`;
+      const activity = `${value} x ${rate} hour ${pluralize('week', value)}`;
+      totals += `${pad(activity, 30)} = ${rate * value} hours\n`;
     }
 
     totals += `\n`;

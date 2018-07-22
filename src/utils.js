@@ -21,3 +21,7 @@ export const b64DecodeUnicode = (str) => {
 export const pluralize = (str, value) => {
     return str + (value !== 1 ? 's' : '');
 };
+
+export  const pad = (str, length) => {
+    return str + ' '.repeat(length - str.length);
+}
