@@ -125,21 +125,28 @@ he'll work with us for 2 weeks
         }
         if (t === 'd') {
           daysPerWeek = v;
-          hoursPerWeek = daysPerWeek * hoursPerDay;
           convSet = 'days / week';
-          weekly = 0;
+          // update other conversions
+          hoursPerWeek = daysPerWeek * hoursPerDay;
+          weekly = hourly * hoursPerWeek;
+          convSet += ` ($${weekly}/w)`
         }
         if (t === 'h') {
           if (p === 'd') {
             hoursPerDay = v;
-            hoursPerWeek = daysPerWeek * hoursPerDay;
             convSet = 'hours / day';
-            daily = 0;
+            // update other conversions
+            hoursPerWeek = daysPerWeek * hoursPerDay;
+            daily = hoursPerDay * hourly;
+            weekly = hoursPerWeek * hourly;
+            convSet += ` ($${daily}/d, $${weekly}/w)`
           }
           if (p === 'w') {
             hoursPerWeek = v;
             convSet = 'hours / week';
-            weekly = 0;
+            // update other conversions
+            weekly = hourly * hoursPerWeek;
+            convSet += ` ($${weekly}/w)`
           }
         }
 
@@ -276,6 +283,9 @@ he'll work with us for 2 weeks
           </p>
           <p>
             Then use them like this: <strong className="mono">34 hours</strong> or <strong>34h</strong> etc.
+          </p>
+          <p>
+            Define conversions like this: <strong className="mono">2 hours / day</strong> or <strong>2h/d</strong> etc.
           </p>
         </div>
         <div className="center">
