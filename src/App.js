@@ -72,10 +72,32 @@ he'll have 2 weeks of meetings
 
   copyToClipboard() {
     let textArea = document.createElement('textarea');
-    textArea.contenteditable = true; // for iOS
     textArea.innerText = window.location.protocol + '//' + window.location.host +  '?e=' + b64EncodeUnicode(this.state.value);
     document.body.appendChild(textArea);
-    textArea.select();
+
+    let isiOSDevice = navigator.userAgent.match(/ipad|iphone/i);
+
+    if (isiOSDevice) {
+      let editable = textArea.contentEditable;
+      let readOnly = textArea.readOnly;
+
+      textArea.contentEditable = true;
+      textArea.readOnly = false;
+
+      let range = document.createRange();
+      range.selectNodeContents(textArea);
+
+      let selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      textArea.setSelectionRange(0, 999999);
+      textArea.contentEditable = editable;
+      textArea.readOnly = readOnly;
+    } else {
+      textArea.select();
+    }
+
     document.execCommand('copy');
     textArea.remove();
   }
