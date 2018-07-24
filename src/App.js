@@ -43,6 +43,7 @@ he'll have 2 weeks of meetings
       output: '',
       totals: [],
       scrollTop: 0,
+      rows: value.split(/\r\n|\r|\n/).length,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -349,6 +350,7 @@ he'll have 2 weeks of meetings
         value: text,
         output: output,
         totals: totals,
+        rows: text.split(/\r\n|\r|\n/).length,
       }
     );
   }
@@ -374,7 +376,7 @@ he'll have 2 weeks of meetings
             <textarea
               ref="entry"
               className="App-entryArea App-textArea"
-              rows="20"
+              rows={this.state.rows}
               type="text"
               value={this.state.value}
               onScroll={this.handleScroll}
@@ -383,7 +385,7 @@ he'll have 2 weeks of meetings
             <textarea
               ref="output"
               className="App-outputArea App-textArea"
-              rows="20"
+              rows={this.state.rows}
               type="text"
               value={this.state.output}
               onScroll={this.handleScroll}
