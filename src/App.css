@@ -46,3 +46,16 @@
 .App-colophon {
   padding-top: 24px;
 }
+
+/** Mobile **/
+@media only screen and (max-width: 767px), only screen and (max-device-width: 767px) {
+
+  .App-entryArea {
+    width: 80%;
+  }
+
+  .App-outputArea {
+    display: none;
+  }
+
+}
