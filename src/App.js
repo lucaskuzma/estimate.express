@@ -41,7 +41,7 @@ he'll have 2 weeks of meetings
     this.state = {
       value: value,
       output: '',
-      totals: '',
+      totals: [],
       scrollTop: 0,
     };
 
@@ -52,13 +52,11 @@ he'll have 2 weeks of meetings
 
   componentDidMount() {
     this.updateResult(this.state.value);
-    this.refs.total.rows = this.state.totals.split('\n').length;
   }
 
   componentDidUpdate() {
     this.refs.entry.scrollTop = this.state.scrollTop;
     this.refs.output.scrollTop = this.state.scrollTop;
-    this.refs.total.rows = this.state.totals.split('\n').length;
   }
 
   handleChange(event) {
@@ -83,7 +81,7 @@ he'll have 2 weeks of meetings
 
   updateResult(text) {
     let output = '';
-    let totals = '';
+    let totals = [];
 
     let weekly = 0;
     let daily = 0;
@@ -300,51 +298,51 @@ he'll have 2 weeks of meetings
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    
-    totals += `Total time span: ${weeks} weeks`;
-    totals += ` + ${days} days`;
-    totals += ` + ${hours} hours\n`;
 
-    totals += `\n`;
-    totals += `Total work:\n`;
-    totals += `\n`;
+    totals.push(`Total time span: ${weeks} weeks`);
+    totals.push(` + ${days} days`);
+    totals.push(` + ${hours} hours\n`);
+
+    totals.push(`\n`);
+    totals.push(`Total work:\n`);
+    totals.push(`\n`);
 
     // const totalHours = 40 * weeks + 8 * days + hours;
 
-    totals += `${pad(hours.toString() + ' hours', 30)} = ${hours} hours\n`;
+    totals.push(`${pad(hours.toString() + ' hours', 30)} = ${hours} hours\n`);
 
     let totalHours = hours;
 
     for (const [rate, value] of dayTotals) {
       totalHours += rate * value;
       const activity = `${value} x ${rate} hour ${pluralize('day', value)}`;
-      totals += `${pad(activity, 30)} = ${rate * value} hours\n`;
+      totals.push(`${pad(activity, 30)} = ${rate * value} hours\n`);
     }
 
     for (const [rate, value] of weekTotals) {
       totalHours += rate * value;
       const activity = `${value} x ${rate} hour ${pluralize('week', value)}`;
-      totals += `${pad(activity, 30)} = ${rate * value} hours\n`;
+      totals.push(`${pad(activity, 30)} = ${rate * value} hours\n`);
     }
 
-    totals += `\n`;
+    totals.push(`\n`);
 
-    totals += `Total hours of work: ${totalHours}`;
-    totals += `\n = days: ${totalHours/8}`;
-    totals += `\n = weeks: ${totalHours/40}\n`;
+    totals.push(`Total hours of work: ${totalHours}`);
+    totals.push(`\n = days: ${totalHours/8}`);
+    totals.push(`\n = weeks: ${totalHours/40}\n`);
 
-    totals += `\n`;
+    totals.push(`\n`);
 
     for (const [type, value] of rndTotals) {
       const rate = rndRates.get(type);
       const activity = `${value} x $${rate} ${pluralize(type, value)}`;
-      totals += `${pad(activity, 30)} = $${rate * value}\n`;
+      totals.push(`${pad(activity, 30)} = $${rate * value}\n`);
       sum += rate * value;
     }
 
-    totals += `\n`;
+    totals.push(`\n`);
 
-    totals += `Total cash money: $${sum}\n`;
+    totals.push(`Total cash money: $${sum}\n`);
 
     this.setState(
       {
@@ -395,9 +393,7 @@ he'll have 2 weeks of meetings
         </div>
 
         <div ref="total" className="App-totalsArea">
-          <pre>
-            {this.state.totals}
-          </pre>
+          {this.state.totals}
         </div>
 
         <div className="center">
