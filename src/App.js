@@ -300,9 +300,7 @@ he'll have 2 weeks of meetings
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
-    totals += `\n\n`;
-
+    
     totals += `Total time span: ${weeks} weeks`;
     totals += ` + ${days} days`;
     totals += ` + ${hours} hours\n`;
@@ -372,8 +370,8 @@ he'll have 2 weeks of meetings
             Define conversions like this: <strong className="mono">2 hours / day</strong> or <strong>2h/d</strong> etc.
           </p>
         </div>
-        <div className="center">
 
+        <div className="center">
           <form>
             <textarea
               ref="entry"
@@ -393,14 +391,13 @@ he'll have 2 weeks of meetings
               onScroll={this.handleScroll}
               readOnly
             />
-            <textarea
-              ref="total"
-              className="App-totalsArea App-textArea"
-              rows="16"
-              type="text"
-              value={this.state.totals}
-              readOnly />
           </form>
+        </div>
+
+        <div ref="total" className="App-totalsArea">
+          <pre>
+            {this.state.totals}
+          </pre>
         </div>
 
         <div className="center">
