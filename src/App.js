@@ -392,6 +392,7 @@ Try the links above to see some examples.
       output: output,
       totals: totals,
       rows: lineCount,
+      sum: sum,
     };
   }
 
