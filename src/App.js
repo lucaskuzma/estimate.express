@@ -392,7 +392,7 @@ Try the links above to see some examples.
 
         <div className="App-instructions">
           <p>
-            Estimate Express
+            <a href="?e=">Estimate Express</a>
           </p>
           <p>
             examples:&nbsp;
