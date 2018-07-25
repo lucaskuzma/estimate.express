@@ -393,6 +393,7 @@ Try the links above to see some examples.
       totals: totals,
       rows: lineCount,
       sum: sum,
+      hours: totalHours,
     };
   }
 
