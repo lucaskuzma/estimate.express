@@ -36,6 +36,7 @@ Try the links above to see some examples.
     this.handleChange = this.handleChange.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.createMarkup = this.createMarkup.bind(this);
   }
 
   componentDidMount() {
@@ -364,7 +365,7 @@ Try the links above to see some examples.
 
     totals.push(`\n`);
 
-    totals.push(`${pad('', padding)} ${totalHours} hours\n`);
+    totals.push(`${pad('', padding)} <strong>${totalHours} hours</strong>\n`);
     totals.push(`${pad('', padding)} = days: ${totalHours/8}\n`);
     totals.push(`${pad('', padding)} = weeks: ${totalHours/40}\n`);
 
@@ -379,7 +380,7 @@ Try the links above to see some examples.
 
     totals.push(`\n`);
 
-    totals.push(`Total cash money: $${sum}\n`);
+    totals.push(`Total cash money: <strong>$${sum.toLocaleString()}</strong>\n`);
 
     totals.push(`\n`);
 
@@ -397,13 +398,17 @@ Try the links above to see some examples.
     };
   }
 
+  createMarkup() {
+    return {__html: this.state.totals.join('')};
+  }
+
   render() {
     return (
       <div className="App">
 
         <div className="App-instructions">
           <p>
-            <a href="?e=">Estimate Express</a>
+            <strong><a href="?e=">Estimate Express</a></strong>
           </p>
           <p>
             examples:&nbsp;
@@ -438,9 +443,7 @@ Try the links above to see some examples.
           </form>
         </div>
 
-        <div ref="total" className="App-totalsArea">
-          {this.state.totals}
-        </div>
+        <div ref="total" className="App-totalsArea" dangerouslySetInnerHTML={this.createMarkup()} />
 
         <div className="center">
           <button className="btn" onClick={this.copyToClipboard}>Copy your share link</button>
