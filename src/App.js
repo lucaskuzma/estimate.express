@@ -19,7 +19,7 @@ class App extends Component {
       value = `Estimate Express is
 
 - a quick project cost calculator 
-- like a spreadsheet, but fun.
+- like a spreadsheet, but simpler
 
 Try the links above to see some examples.
 `
@@ -311,11 +311,6 @@ Try the links above to see some examples.
 
     const padding = 24;
 
-    totals.push(`Total time: ${weeks} weeks`);
-    totals.push(` + ${days} days`);
-    totals.push(` + ${hours} hours\n`);
-
-    totals.push(`\n`);
     totals.push(`Total work:\n`);
     totals.push(`\n`);
 
@@ -353,6 +348,12 @@ Try the links above to see some examples.
     totals.push(`\n`);
 
     totals.push(`Total cash money: $${sum}\n`);
+
+    totals.push(`\n`);
+    
+    totals.push(`Total time: ${weeks} weeks`);
+    totals.push(` + ${days} days`);
+    totals.push(` + ${hours} hours\n`);
 
     this.setState(
       {
