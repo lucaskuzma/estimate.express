@@ -97,6 +97,10 @@ Try the links above to see some examples.
     let daily = 0;
     let hourly = 0;
 
+    let weeklyExplicit = false;
+    let dailyExplicit = false;
+    let hourlyExplicit = false;
+
     let weeks = 0;
     let days = 0;
     let hours = 0;
@@ -187,12 +191,13 @@ Try the links above to see some examples.
           if(t === 'w') {
             weekly = v;
             rateSet = 'week';
+            weeklyExplicit = true;
 
-            if(hourly === 0) {
+            if(!hourlyExplicit) {
               hourly = v / hoursPerWeek;
               convSet.push(`$${hourly}/h`);
             }
-            if(daily === 0) {
+            if(!dailyExplicit) {
               daily = v / daysPerWeek;
               convSet.push(`$${daily}/d`);
             }
@@ -200,12 +205,13 @@ Try the links above to see some examples.
           if(t === 'd') {
             daily = v;
             rateSet = 'day';
+            dailyExplicit = true;
 
-            if(hourly === 0) {
+            if(!hourlyExplicit) {
               hourly = v / hoursPerDay;
               convSet.push(`$${hourly}/h`);
             }
-            if(weekly === 0) {
+            if(!weeklyExplicit) {
               weekly = v * daysPerWeek;
               convSet.push(`$${weekly}/w`);
             }
@@ -213,12 +219,13 @@ Try the links above to see some examples.
           if(t === 'h') {
             hourly = v;
             rateSet = 'hour';
+            hourlyExplicit = true;
 
-            if(weekly === 0) {
+            if(!weeklyExplicit) {
               weekly = v * hoursPerWeek;
               convSet.push(`$${weekly}/w`);
             }
-            if(daily === 0) {
+            if(!dailyExplicit) {
               daily = v * hoursPerDay;
               convSet.push(`$${daily}/d`);
             }
@@ -397,8 +404,8 @@ Try the links above to see some examples.
           <p>
             examples:&nbsp;
             <a href="?e=RGVmaW5lIHJhdGVzIGxpa2UgdGhpczogNzUvaApPciB0aGlzOiA3NSAvIGhvdXIKCk5vdyB5b3UgY2FuIGxpc3QgdGFza3MgbGlrZToKClR3aWRkbGUgYml0cyAyaApDb25maWd1cmUgSlMgdG9vbGluZyA0IHdlZWtzCldyaXRlIFJlYWN0IGFwcCAyIGhvdXJzCk5vb2RsZSB3aXRoIE5vZGUgMWQKCllvdSBjYW4gY2hhbmdlIHRoZSByYXRlIGFib3ZlIHRvIHF1aWNrbHkgc2VlIGl0cyBpbXBhY3Qgb24gY29zdC4KCg==">[rates]</a>
-            <a href="?e=U3RhcnQgd2l0aCAxMDAvaAoKV29yayBmb3IgMSB3awoKT3RoZXIgcmF0ZXMgYXJlIGF1dG9tYXRpY2FsbHkgYXNzdW1lZCwKYnV0IHlvdSBjYW4gZGVmaW5lIHRoZW06CgpNeSBkYXkgcmF0ZSBpcyA1MDAvZAphbmQgSSB0YWtlIDIwMDAvdwoKVGhpcyBwcm9qZWN0IHdpbGwgdGFrZSAyIHdlZWtzCnBsdXMgMWQgZXh0cmEKYW5kIHRoZXJlJ3MgdGhhdCAxIGhvdXIgbWVldGluZwoKTm90ZSB0aGF0IGFmdGVyIHNldHRpbmcgc3BlY2lmaWMgZGFpbHkgYW5kIHdlZWtseSByYXRlcywgeW91ciBob3VybHkgd2lsbCBubyBsb25nZXIgYWZmZWN0IHRoZW0uCgp0YXNrIDEgd2Vlawo1MC9oCnRhc2sgMSB3ZWVrCgo=">[defaults]</a>
-            <a href="?e=V2UgYXNzdW1lIGEgZGF5IGhhcyA4IGhvdXJzLAphbmQgYSB3ZWVrIGhhcyA1IGRheXMsCmJ1dCB5b3UgY2FuIGNoYW5nZSB0aGlzLgoKVGhlIGJvc3MgbWFrZXMgMzAwL2hyCgpCdXQgdGhlIGJvc3Mgb25seSB3b3JrcyAzIGhvdXJzIC8gZGF5CkFuZCBvbmx5IDIgZGF5cyAvIHdlZWsKClNoZSBib3NzZXMgZm9yIDIgd2Vla3MKYnV0IGFsc28gaGFzIGEgMyBob3VyIG1lZXRpbmcK">[conversions]</a>
+            <a href="?e=U3RhcnQgd2l0aCAxMDAvaAoKV29yayBmb3IgMSB3awoKT3RoZXIgcmF0ZXMgYXJlIGF1dG9tYXRpY2FsbHkgYXNzdW1lZCwKYnV0IHlvdSBjYW4gZGVmaW5lIHRoZW06CgpNeSBkYXkgcmF0ZSBpcyA1MDAvZAphbmQgSSB0YWtlIDIwMDAvdwoKVGhpcyBwcm9qZWN0IHdpbGwgdGFrZSAyIHdlZWtzCnBsdXMgMWQgZXh0cmEKYW5kIHRoZXJlJ3MgdGhhdCAxIGhvdXIgbWVldGluZwoKTm90ZSB0aGF0IGFmdGVyIHNldHRpbmcgcmF0ZXMgZXhwbGljaXRseSwgdGhlcmUgaXMgbm8gYXV0b21hdGljIGNvbnZlcnNpb24uCgp0YXNrIDEgd2Vlawo1MC9oCnRhc2sgMSB3ZWVrCg==">[defaults]</a>
+            <a href="?e=V2UgYXNzdW1lIGEgZGF5IGhhcyA4IGhvdXJzLAphbmQgYSB3ZWVrIGhhcyA1IGRheXMsCmJ1dCB5b3UgY2FuIGNoYW5nZSB0aGlzLgoKVGhlIGJvc3MgbWFrZXMgMzAwL2hyCgpCdXQgdGhlIGJvc3Mgb25seSB3b3JrcyAzIGhvdXJzIC8gZGF5CkFuZCBvbmx5IDIgZGF5cyAvIHdlZWsKClNoZSBib3NzZXMgZm9yIDIgd2Vla3MKYnV0IGFsc28gaGFzIGEgMyBob3VyIG1lZXRpbmcK">[schedules]</a>
             <a href="?e=WW91IGNhbiBkZWZpbmUgYXJiaXRyYXJ5IGl0ZW1zOgoKRG9ncyBjb3N0IDMvZG9nCkNhdHMgYXJlIG9ubHkgMS9jYXQKCldlJ3JlIGdvaW5nIHRvIG5lZWQ6CjQgZG9nCmFuZCAxIGNhdAoKTm90ZSB0aGF0IDIgZG9ncyBkb2Vzbid0IHdvcmsuCgpMdW5jaCBpcyAyL/CfjK4KYW5kIHdlIHdpbGwgZWF0IDUw8J+MrgoK">[items]</a>
             <a href="?e=RXhwZW5zZXMgY2FuIHNpbXBseSBiZSBsaXN0ZWQ6CgpNZWdhQ3VydGlzQmlnIGxpY2Vuc2UgOS45OQpDb21pY1NhbnMgZmFtaWx5IHBhY2sgNjY2Cgo=">[expenses]</a>
           </p>
@@ -432,11 +439,11 @@ Try the links above to see some examples.
         </div>
 
         <div className="center">
-          <button className="btn" onClick={this.copyToClipboard}>Copy share link</button>
+          <button className="btn" onClick={this.copyToClipboard}>Copy your share link</button>
         </div>
 
         <div className="App-colophon center">
-          <p>Made with <span role="img" aria-label="love">👽</span> by <a href="http://strange.agency">The Strange Agency</a></p>
+          <p>Made with <span role="img" aria-label="love">👽</span> by <a href="http://lucaskuzma.com">Lucas Kuzma</a></p>
         </div>
 
       </div>
