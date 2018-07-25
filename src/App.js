@@ -126,6 +126,7 @@ Try the links above to see some examples.
       let convStr = '';
       let rateStr = '';
       let amountStr = '';
+      let expenseStr = '';
 
       // set conversion
 
@@ -307,8 +308,17 @@ Try the links above to see some examples.
         }
       }
 
+      regex = /(\d+\.?\d*)($|\n)/; // https://regexr.com/3sv8h
+      match = regex.exec(line);
+      if(match) {
+        const v = parseFloat(match[1]);
+        expenseStr = `$${v}`;
+
+        sum += v;
+      }
+
       // output results of parsing this line
-      output +=  [amountStr, rateStr, convStr].join('') + '\n';
+      output +=  [amountStr, rateStr, convStr, expenseStr].join('') + '\n';
     }
 
     // -----------------------------------------------------------------------------------------------------------------
