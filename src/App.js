@@ -279,7 +279,8 @@ Try the links above to see some examples.
       if(convStr === '' && match) {
         const v = parseFloat(match[1]);
         let t = match[2];
-        if(isTimeWord(t)) {
+        // ignore if not a time word and also if no hourly rate has been set yet
+        if(isTimeWord(t) && hourly > 0) {
           t = t.charAt(0);
           let amount = 0;
 
@@ -307,6 +308,8 @@ Try the links above to see some examples.
           sum += amount;
         }
       }
+
+      // just a line item expense
 
       regex = /(\d+\.?\d*)($|\n)/; // https://regexr.com/3sv8h
       match = regex.exec(line);
@@ -392,7 +395,7 @@ Try the links above to see some examples.
             Estimate Express
           </p>
           <p>
-            examples:
+            examples:&nbsp;
             <a href="?e=RGVmaW5lIHJhdGVzIGxpa2UgdGhpczogNzUvaApPciB0aGlzOiA3NSAvIGhvdXIKCk5vdyB5b3UgY2FuIGxpc3QgdGFza3MgbGlrZToKClR3aWRkbGUgYml0cyAyaApDb25maWd1cmUgSlMgdG9vbGluZyA0IHdlZWtzCldyaXRlIFJlYWN0IGFwcCAyIGhvdXJzCk5vb2RsZSB3aXRoIE5vZGUgMWQKCllvdSBjYW4gY2hhbmdlIHRoZSByYXRlIGFib3ZlIHRvIHF1aWNrbHkgc2VlIGl0cyBpbXBhY3Qgb24gY29zdC4KCg==">[rates]</a>
             <a href="?e=U3RhcnQgd2l0aCAxMDAvaAoKV29yayBmb3IgMSB3awoKT3RoZXIgcmF0ZXMgYXJlIGF1dG9tYXRpY2FsbHkgYXNzdW1lZCwKYnV0IHlvdSBjYW4gZGVmaW5lIHRoZW06CgpNeSBkYXkgcmF0ZSBpcyA1MDAvZAphbmQgSSB0YWtlIDIwMDAvdwoKVGhpcyBwcm9qZWN0IHdpbGwgdGFrZSAyIHdlZWtzCnBsdXMgMWQgZXh0cmEKYW5kIHRoZXJlJ3MgdGhhdCAxIGhvdXIgbWVldGluZwoKTm90ZSB0aGF0IGFmdGVyIHNldHRpbmcgc3BlY2lmaWMgZGFpbHkgYW5kIHdlZWtseSByYXRlcywgeW91ciBob3VybHkgd2lsbCBubyBsb25nZXIgYWZmZWN0IHRoZW0uCgp0YXNrIDEgd2Vlawo1MC9oCnRhc2sgMSB3ZWVrCgo=">[defaults]</a>
             <a href="?e=V2UgYXNzdW1lIGEgZGF5IGhhcyA4IGhvdXJzLAphbmQgYSB3ZWVrIGhhcyA1IGRheXMsCmJ1dCB5b3UgY2FuIGNoYW5nZSB0aGlzLgoKVGhlIGJvc3MgbWFrZXMgMzAwL2hyCgpCdXQgdGhlIGJvc3Mgb25seSB3b3JrcyAzIGhvdXJzIC8gZGF5CkFuZCBvbmx5IDIgZGF5cyAvIHdlZWsKClNoZSBib3NzZXMgZm9yIDIgd2Vla3MKYnV0IGFsc28gaGFzIGEgMyBob3VyIG1lZXRpbmcK">[conversions]</a>
