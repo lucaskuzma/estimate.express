@@ -359,15 +359,14 @@ Try the links above to see some examples.
       totals.push(`${pad(activity, padding)} = ${rate * value} hours\n`);
     }
 
-    totals.push(`\n`);
+    totals.push(`${pad('', padding)}   --------- \n`);
 
-    totals.push(`${pad('', padding)} ----------- \n`);
+    const totalDays = totalHours/8;
+    const totalWeeks = totalHours/40;
 
-    totals.push(`\n`);
-
-    totals.push(`${pad('', padding)} <strong>${totalHours} hours</strong>\n`);
-    totals.push(`${pad('', padding)} = days: ${totalHours/8}\n`);
-    totals.push(`${pad('', padding)} = weeks: ${totalHours/40}\n`);
+    totals.push(`${pad('', padding)}   <strong>${totalHours} hours</strong>\n`);
+    totals.push(`${pad('', padding)} = ${totalDays} ${pluralize('day', totalDays)}\n`);
+    totals.push(`${pad('', padding)} = ${totalWeeks} ${pluralize('week', totalWeeks)}\n`);
 
     totals.push(`\n`);
 
