@@ -324,7 +324,7 @@ he'll have 2 weeks of meetings
 
     const padding = 24;
 
-    totals.push(`Total time span: ${weeks} weeks`);
+    totals.push(`Total time: ${weeks} weeks`);
     totals.push(` + ${days} days`);
     totals.push(` + ${hours} hours\n`);
 
@@ -348,11 +348,11 @@ he'll have 2 weeks of meetings
       totals.push(`${pad(activity, padding)} = ${rate * value} hours\n`);
     }
 
-    totals.push(`\n`);
+    totals.push(`${pad('', padding)} ----------- \n`);
 
-    totals.push(`Total hours of work: ${totalHours}`);
-    totals.push(`\n = days: ${totalHours/8}`);
-    totals.push(`\n = weeks: ${totalHours/40}\n`);
+    totals.push(`${pad('', padding)} ${totalHours} hours\n`);
+    totals.push(`${pad('', padding)} = days: ${totalHours/8}\n`);
+    totals.push(`${pad('', padding)} = weeks: ${totalHours/40}\n`);
 
     totals.push(`\n`);
 
