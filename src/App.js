@@ -322,6 +322,8 @@ he'll have 2 weeks of meetings
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    const padding = 24;
+
     totals.push(`Total time span: ${weeks} weeks`);
     totals.push(` + ${days} days`);
     totals.push(` + ${hours} hours\n`);
@@ -330,22 +332,20 @@ he'll have 2 weeks of meetings
     totals.push(`Total work:\n`);
     totals.push(`\n`);
 
-    // const totalHours = 40 * weeks + 8 * days + hours;
-
-    totals.push(`${pad(hours.toString() + ' hours', 30)} = ${hours} hours\n`);
+    totals.push(`${pad(hours.toString() + ' hours', padding)} = ${hours} hours\n`);
 
     let totalHours = hours;
 
     for (const [rate, value] of dayTotals) {
       totalHours += rate * value;
       const activity = `${value} x ${rate} hour ${pluralize('day', value)}`;
-      totals.push(`${pad(activity, 30)} = ${rate * value} hours\n`);
+      totals.push(`${pad(activity, padding)} = ${rate * value} hours\n`);
     }
 
     for (const [rate, value] of weekTotals) {
       totalHours += rate * value;
       const activity = `${value} x ${rate} hour ${pluralize('week', value)}`;
-      totals.push(`${pad(activity, 30)} = ${rate * value} hours\n`);
+      totals.push(`${pad(activity, padding)} = ${rate * value} hours\n`);
     }
 
     totals.push(`\n`);
@@ -359,7 +359,7 @@ he'll have 2 weeks of meetings
     for (const [type, value] of rndTotals) {
       const rate = rndRates.get(type);
       const activity = `${value} x $${rate} ${pluralize(type, value)}`;
-      totals.push(`${pad(activity, 30)} = $${rate * value}\n`);
+      totals.push(`${pad(activity, padding)} = $${rate * value}\n`);
       sum += rate * value;
     }
 
