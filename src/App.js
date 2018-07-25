@@ -39,7 +39,9 @@ Try the links above to see some examples.
   }
 
   componentDidMount() {
-    this.updateResult(this.state.value);
+    this.setState(
+      App.updateResult(this.state.value)
+    )
   }
 
   componentDidUpdate() {
@@ -48,7 +50,9 @@ Try the links above to see some examples.
   }
 
   handleChange(event) {
-    this.updateResult(event.target.value);
+    this.setState(
+      App.updateResult(event.target.value)
+    )
   }
 
   handleScroll(event) {
@@ -89,7 +93,7 @@ Try the links above to see some examples.
     textArea.remove();
   }
 
-  updateResult(text) {
+  static updateResult(text) {
     let output = '';
     let totals = [];
 
@@ -378,19 +382,17 @@ Try the links above to see some examples.
     totals.push(`Total cash money: $${sum}\n`);
 
     totals.push(`\n`);
-    
+
     totals.push(`Total time: ${weeks} weeks`);
     totals.push(` + ${days} days`);
     totals.push(` + ${hours} hours\n`);
 
-    this.setState(
-      {
-        value: text,
-        output: output,
-        totals: totals,
-        rows: lineCount,
-      }
-    );
+    return {
+      value: text,
+      output: output,
+      totals: totals,
+      rows: lineCount,
+    };
   }
 
   render() {
