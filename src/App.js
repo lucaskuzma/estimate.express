@@ -30,7 +30,7 @@ Try the links above to see some examples.
       output: '',
       totals: [],
       scrollTop: 0,
-      rows: value.split(/\r\n|\r|\n/).length,
+      rows: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -113,11 +113,15 @@ Try the links above to see some examples.
 
     let sum = 0;
 
+    let lineCount = 0; // rough estimate of lines + line wraps to calculate entry height
+
     // -----------------------------------------------------------------------------------------------------------------
 
     let lines = text.split('\n');
     for(let i = 0; i < lines.length; i++) {
       const line = lines[i];
+
+      lineCount += 1 + Math.floor(line.length / 38);
 
       let convStr = '';
       let rateStr = '';
@@ -330,7 +334,11 @@ Try the links above to see some examples.
       totals.push(`${pad(activity, padding)} = ${rate * value} hours\n`);
     }
 
+    totals.push(`\n`);
+
     totals.push(`${pad('', padding)} ----------- \n`);
+
+    totals.push(`\n`);
 
     totals.push(`${pad('', padding)} ${totalHours} hours\n`);
     totals.push(`${pad('', padding)} = days: ${totalHours/8}\n`);
@@ -360,7 +368,7 @@ Try the links above to see some examples.
         value: text,
         output: output,
         totals: totals,
-        rows: text.split(/\r\n|\r|\n/).length,
+        rows: lineCount,
       }
     );
   }
