@@ -16,33 +16,25 @@ class App extends Component {
       const query = search.substr(3);
       value = b64DecodeUnicode(query);
     } else {
-      value = `Estimate Express is
+      value = `Estimate Express
 
-- a quick project cost calculator 
-- like a spreadsheet, but simpler
+• quick project cost calculator 
+• like a spreadsheet, but simpler
+• works better on desktop
 
 Try the links above to see some examples.
 `
     }
 
     this.state = {
-      value: value,
-      output: '',
-      totals: [],
       scrollTop: 0,
-      rows: 0,
+      ...App.updateResult(value),
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
-  }
-
-  componentDidMount() {
-    this.setState(
-      App.updateResult(this.state.value)
-    )
   }
 
   componentDidUpdate() {
@@ -411,11 +403,11 @@ Try the links above to see some examples.
           </p>
           <p>
             examples:&nbsp;
+            <a href="?e=RXhwZW5zZXMgY2FuIHNpbXBseSBiZSBsaXN0ZWQ6CgpNZWdhQ3VydGlzQmlnIGxpY2Vuc2UgOS45OQpDb21pY1NhbnMgZmFtaWx5IHBhY2sgNjY2Cgo=">[expenses]</a>
             <a href="?e=RGVmaW5lIHJhdGVzIGxpa2UgdGhpczogNzUvaApPciB0aGlzOiA3NSAvIGhvdXIKCk5vdyB5b3UgY2FuIGxpc3QgdGFza3MgbGlrZToKClR3aWRkbGUgYml0cyAyaApDb25maWd1cmUgSlMgdG9vbGluZyA0IHdlZWtzCldyaXRlIFJlYWN0IGFwcCAyIGhvdXJzCk5vb2RsZSB3aXRoIE5vZGUgMWQKCllvdSBjYW4gY2hhbmdlIHRoZSByYXRlIGFib3ZlIHRvIHF1aWNrbHkgc2VlIGl0cyBpbXBhY3Qgb24gY29zdC4KCg==">[rates]</a>
             <a href="?e=U3RhcnQgd2l0aCAxMDAvaAoKV29yayBmb3IgMSB3awoKT3RoZXIgcmF0ZXMgYXJlIGF1dG9tYXRpY2FsbHkgYXNzdW1lZCwKYnV0IHlvdSBjYW4gZGVmaW5lIHRoZW06CgpNeSBkYXkgcmF0ZSBpcyA1MDAvZAphbmQgSSB0YWtlIDIwMDAvdwoKVGhpcyBwcm9qZWN0IHdpbGwgdGFrZSAyIHdlZWtzCnBsdXMgMWQgZXh0cmEKYW5kIHRoZXJlJ3MgdGhhdCAxIGhvdXIgbWVldGluZwoKTm90ZSB0aGF0IGFmdGVyIHNldHRpbmcgcmF0ZXMgZXhwbGljaXRseSwgdGhlcmUgaXMgbm8gYXV0b21hdGljIGNvbnZlcnNpb24uCgp0YXNrIDEgd2Vlawo1MC9oCnRhc2sgMSB3ZWVrCg==">[defaults]</a>
             <a href="?e=V2UgYXNzdW1lIGEgZGF5IGhhcyA4IGhvdXJzLAphbmQgYSB3ZWVrIGhhcyA1IGRheXMsCmJ1dCB5b3UgY2FuIGNoYW5nZSB0aGlzLgoKVGhlIGJvc3MgbWFrZXMgMzAwL2hyCgpCdXQgdGhlIGJvc3Mgb25seSB3b3JrcyAzIGhvdXJzIC8gZGF5CkFuZCBvbmx5IDIgZGF5cyAvIHdlZWsKClNoZSBib3NzZXMgZm9yIDIgd2Vla3MKYnV0IGFsc28gaGFzIGEgMyBob3VyIG1lZXRpbmcKCk5vdGUgdGhhdCB0aGUgdG90YWwgd2Vla3Mgd29ya2VkICguMzc1KSBpcyBtdWNoIGxlc3MgdGhhbiB0b3RhbCB3ZWVrcyBlbGFwc2VkICgyKS4K">[schedules]</a>
             <a href="?e=WW91IGNhbiBkZWZpbmUgYXJiaXRyYXJ5IGl0ZW1zOgoKRG9ncyBjb3N0IDMvZG9nCkNhdHMgYXJlIG9ubHkgMS9jYXQKCldlJ3JlIGdvaW5nIHRvIG5lZWQ6CjQgZG9nCmFuZCAxIGNhdAoKTm90ZSB0aGF0IDIgZG9ncyBkb2Vzbid0IHdvcmsuCgpMdW5jaCBpcyAyL/CfjK4KYW5kIHdlIHdpbGwgZWF0IDUw8J+MrgoK">[items]</a>
-            <a href="?e=RXhwZW5zZXMgY2FuIHNpbXBseSBiZSBsaXN0ZWQ6CgpNZWdhQ3VydGlzQmlnIGxpY2Vuc2UgOS45OQpDb21pY1NhbnMgZmFtaWx5IHBhY2sgNjY2Cgo=">[expenses]</a>
           </p>
         </div>
 
