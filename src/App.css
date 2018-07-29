@@ -10,7 +10,7 @@
 .App-textArea {
   resize: none;
 
-  font-family: monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: inherit;
   color: inherit;
 
