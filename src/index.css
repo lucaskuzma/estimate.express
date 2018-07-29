@@ -17,7 +17,22 @@ code {
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: #009dff;
+
+  font-family: 'Roboto', sans-serif;
+
+  padding: 4px 12px;
+  margin: 4px;
+  border-radius: 5px;
+  font-size: inherit;
+  border: none;
+  background-color: #fffeda;
+  box-shadow: 2px 2px #aaaaaa;
+  outline: none;
+}
+
+a:active{
+  box-shadow: 0px 0px #eeeeee;
 }
 
 strong {
@@ -25,16 +40,15 @@ strong {
 }
 
 .btn {
-  font-family: inherit;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: inherit;
-  border: none;
-  background-color: #f2f2f2;
-  box-shadow: 2px 2px #aaaaaa;
-  outline: none;
+  cursor: pointer;
 }
 
-.btn:active{
-  box-shadow: 0px 0px #eeeeee;
- }
+.title {
+  font-family: 'Roboto Mono', monospace;
+  background-color: inherit;
+  box-shadow: 0px 0px;
+  border-radius: 0;
+  margin: 0px;
+  padding: 0px;
+  color: #000000;
+}
