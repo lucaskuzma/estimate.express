@@ -12,7 +12,7 @@ class App extends Component {
 
     let value = '';
     const search = window.location.search;
-    if(search) {
+    if(search && search.substr(0, 3) === '?e=') {
       const query = search.substr(3);
       value = b64DecodeUnicode(query);
     } else {
